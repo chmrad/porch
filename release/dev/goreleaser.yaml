@@ -54,5 +54,5 @@ release:
   github:
     owner: nephio-project
     name: porch
-  draft: "true"
+  draft: true
   prerelease: "true"
