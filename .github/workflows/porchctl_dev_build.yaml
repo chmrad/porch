@@ -31,12 +31,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Run GoReleaser
-        id: run-goreleaser
-        uses: goreleaser/goreleaser-action@v5
+      - name: Build
+        run: make porchctl
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          distribution: goreleaser
-          version: latest
-          args: release --skip-validate -f release/dev/goreleaser.yaml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: .build/porchctl
+          asset_name: porchctl
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is dev porchctl binary"
