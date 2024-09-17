@@ -49,6 +49,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ matrix.image }}
+          tags: |
+            type=sha
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v6
@@ -56,9 +58,8 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
-          #tags: ${{ steps.meta.outputs.tags }}
           tags: |
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=short
+            ${{ steps.meta.outputs.tags }}
             latest
           labels: ${{ steps.meta.outputs.labels }}
           no-cache: true
