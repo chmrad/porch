@@ -1,0 +1,62 @@
+name: Dev Image Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  ORG: radoslawc
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push-image:
+    if: github.repository_owner == 'chmrad'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./build/Dockerfile
+            image: ${{ env.REGISTRY }}/${{ env.ORG }}/porch-server
+          - dockerfile: ./controllers/Dockerfile
+            image: ${{ env.REGISTRY }}/${{ env.ORG }}/porch-controllers
+          - dockerfile: ./func/Dockerfile
+            image: ${{ env.REGISTRY }}/${{ env.ORG }}/porch-function-runner
+          - dockerfile: ./func/Dockerfile-wrapperserver
+            image: ${{ env.REGISTRY }}/${{ env.ORG }}/porch-wrapper-server
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ matrix.image }}
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          sbom: true
+          no-cache: true
+          provenance: true
+          
