@@ -19,13 +19,13 @@ jobs:
       matrix:
         include:
           - dockerfile: ./build/Dockerfile
-            image: docker.io/radoslawc/porch-server
+            image: docker.io/radoslawc/porch-server:latest
           - dockerfile: ./controllers/Dockerfile
-            image: docker.io/radoslawc/porch-controllers
+            image: docker.io/radoslawc/porch-controllers:latest
           - dockerfile: ./func/Dockerfile
-            image: docker.io/radoslawc/porch-function-runner
+            image: docker.io/radoslawc/porch-function-runner:latest
           - dockerfile: ./func/Dockerfile-wrapperserver
-            image: docker.io/radoslawc/porch-wrapper-server
+            image: docker.io/radoslawc/porch-wrapper-server:latest
     permissions:
       contents: read
       packages: write
@@ -56,4 +56,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           no-cache: true
-          
+          sbom: true
