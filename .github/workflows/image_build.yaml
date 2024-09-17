@@ -19,13 +19,13 @@ jobs:
       matrix:
         include:
           - dockerfile: ./build/Dockerfile
-            image: docker.io/radoslawc/porch-server:latest
+            image: docker.io/radoslawc/porch-server
           - dockerfile: ./controllers/Dockerfile
-            image: docker.io/radoslawc/porch-controllers:latest
+            image: docker.io/radoslawc/porch-controllers
           - dockerfile: ./func/Dockerfile
-            image: docker.io/radoslawc/porch-function-runner:latest
+            image: docker.io/radoslawc/porch-function-runner
           - dockerfile: ./func/Dockerfile-wrapperserver
-            image: docker.io/radoslawc/porch-wrapper-server:latest
+            image: docker.io/radoslawc/porch-wrapper-server
     permissions:
       contents: read
       packages: write
