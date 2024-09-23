@@ -17,6 +17,8 @@ on:
   push:
     tags:
       - "v[1-9].*.*"
+    tags-ignore:
+      - "porchpkg\/v[1-9].*.*"
 
 jobs:
   build:
