@@ -14,7 +14,7 @@
 
 name: porchctl Release
 on:
-  create:
+  push:
     tags:
       - "v[1-9].*.*"
 
