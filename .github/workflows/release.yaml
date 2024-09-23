@@ -16,7 +16,7 @@ name: porchctl Release
 on:
   create:
     tags:
-      - "^v[1-9].*.*"
+      - "v[1-9].*.*"
 
 jobs:
   build:
