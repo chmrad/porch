@@ -16,9 +16,8 @@ name: porchctl Release
 on:
   push:
     tags:
-      - "v[1-9].*.*"
-    tags-ignore:
-      - "porchpkg/v[1-9].*.*"
+      - "v*[0-9]+.[0-9]+.[0-9]+"
+
 
 jobs:
   build:
