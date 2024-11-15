@@ -30,13 +30,13 @@ jobs:
       matrix:
         include:
           - dockerfile: ./build/Dockerfile
-            image: docker.io/nephio/porch-server
+            image: docker.io/radoslawc/porch-server
           - dockerfile: ./controllers/Dockerfile
-            image: docker.io/nephio/porch-controllers
+            image: docker.io/radoslawc/porch-controllers
           - dockerfile: ./func/Dockerfile
-            image: docker.io/nephio/porch-function-runner
+            image: docker.io/radoslawc/porch-function-runner
           - dockerfile: ./func/Dockerfile-wrapperserver
-            image: docker.io/nephio/porch-wrapper-server
+            image: docker.io/radoslawc/porch-wrapper-server
     permissions:
       contents: read
       packages: write
